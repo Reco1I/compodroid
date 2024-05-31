@@ -61,7 +61,6 @@ fun ViewGroup.LinearLayout(
     baselineAligned: Boolean? = null,
     baselineAlignedChildIndex: Int? = null,
     measureWithLargestChildEnabled: Boolean? = null,
-
     content: LinearLayout.() -> Unit
 
 ): LinearLayout {

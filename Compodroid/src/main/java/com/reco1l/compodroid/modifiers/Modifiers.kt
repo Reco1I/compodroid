@@ -104,6 +104,16 @@ fun Modifier.rowSpan(span: Int) = Modifier {
 }
 
 
+// Layout gravity
+
+fun Modifier.layoutGravity(gravity: Int) = Modifier {
+    invoke(it)
+    (it.layoutParams as? LinearLayout.LayoutParams)?.apply {
+        this.gravity = gravity
+    }
+}
+
+
 // Padding
 
 fun Modifier.padding(size: Int) = Modifier {
