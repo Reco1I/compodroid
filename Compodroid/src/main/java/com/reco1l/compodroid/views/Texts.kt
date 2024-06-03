@@ -2,7 +2,9 @@ package com.reco1l.compodroid.views
 
 import android.graphics.Typeface
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextUtils.TruncateAt
+import android.text.TextWatcher
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
@@ -11,19 +13,20 @@ import com.reco1l.compodroid.modifiers.Modifier
 
 
 fun ViewGroup.TextView(
+
     modifier: Modifier = Modifier,
     text: CharSequence? = null,
     hint: CharSequence? = null,
     color: Int? = null,
-    fontSize: Float? = null,
-    fontStyle: Int? = null,
-    letterSpacing: Float? = null,
-    textAlignment: Int? = null,
+    gravity: Int? = null,
     typeface: Typeface? = null,
+    ems: Int? = null,
     maxLines: Int? = null,
+    fontSize: Float? = null,
     ellipsize: TruncateAt? = null,
-    @GravityInt gravity: Int? = null,
+    textWatcher: TextWatcher? = null,
     content: TextView.() -> Unit
+
 ): TextView {
     val view = TextView(context)
     view.layoutParams = generateLayoutParams(null)
@@ -31,14 +34,15 @@ fun ViewGroup.TextView(
 
     view.text = text
     view.hint = hint
+
+    ems?.let { view.setEms(it) }
     color?.let { view.setTextColor(it) }
-    gravity?.let { view.gravity = gravity }
-    fontSize?.let { view.textSize = it }
-    fontStyle?.let { view.typeface = typeface }
-    letterSpacing?.let { view.letterSpacing = it }
-    textAlignment?.let { view.textAlignment = it }
+    gravity?.let { view.gravity = it }
+    typeface?.let { view.typeface = it }
     maxLines?.let { view.maxLines = it }
     ellipsize?.let { view.ellipsize = it }
+    fontSize?.let { view.textSize = it }
+    textWatcher?.let { view.addTextChangedListener(it) }
 
     view.content()
     addView(view)
@@ -46,20 +50,20 @@ fun ViewGroup.TextView(
 }
 
 fun ViewGroup.EditText(
+
     modifier: Modifier = Modifier,
     text: Editable? = null,
     hint: CharSequence? = null,
     color: Int? = null,
-    fontSize: Float? = null,
-    fontStyle: Int? = null,
-    ems: Int? = null,
-    letterSpacing: Float? = null,
-    textAlignment: Int? = null,
+    gravity: Int? = null,
     typeface: Typeface? = null,
+    ems: Int? = null,
     maxLines: Int? = null,
+    fontSize: Float? = null,
     ellipsize: TruncateAt? = null,
-    @GravityInt gravity: Int? = null,
+    textWatcher: TextWatcher? = null,
     content: EditText.() -> Unit
+
 ): EditText {
     val view = EditText(context)
     view.layoutParams = generateLayoutParams(null)
@@ -68,15 +72,14 @@ fun ViewGroup.EditText(
     view.text = text
     view.hint = hint
 
-    color?.let { view.setTextColor(it) }
-    gravity?.let { view.gravity = gravity }
-    fontSize?.let { view.textSize = it }
-    fontStyle?.let { view.typeface = typeface }
     ems?.let { view.setEms(it) }
-    letterSpacing?.let { view.letterSpacing = it }
-    textAlignment?.let { view.textAlignment = it }
+    color?.let { view.setTextColor(it) }
+    gravity?.let { view.gravity = it }
+    typeface?.let { view.typeface = it }
     maxLines?.let { view.maxLines = it }
     ellipsize?.let { view.ellipsize = it }
+    fontSize?.let { view.textSize = it }
+    textWatcher?.let { view.addTextChangedListener(it) }
 
     view.content()
     addView(view)
