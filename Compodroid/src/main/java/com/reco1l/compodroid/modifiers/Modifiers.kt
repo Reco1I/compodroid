@@ -3,6 +3,7 @@ package com.reco1l.compodroid.modifiers
 import android.graphics.Outline
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams
 import android.view.ViewGroup.MarginLayoutParams
@@ -264,3 +265,20 @@ fun Modifier.alpha(value: Float) = Modifier {
     it.alpha = value
 }
 
+
+// Interaction
+
+fun Modifier.onClick(action: View.OnClickListener) = Modifier {
+    invoke(it)
+    it.setOnClickListener(action)
+}
+
+fun Modifier.onLongClick(action: View.OnLongClickListener) = Modifier {
+    invoke(it)
+    it.setOnLongClickListener(action)
+}
+
+fun Modifier.onTouch(action: (View, MotionEvent) -> Boolean) = Modifier {
+    invoke(it)
+    it.setOnTouchListener(action)
+}

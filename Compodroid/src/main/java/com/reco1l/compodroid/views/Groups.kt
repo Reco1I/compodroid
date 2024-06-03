@@ -1,6 +1,7 @@
 package com.reco1l.compodroid.views
 
 import android.graphics.drawable.Drawable
+import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.GridLayout
@@ -21,7 +22,7 @@ import com.reco1l.compodroid.modifiers.Modifier
 fun ViewGroup.FrameLayout(
 
     modifier: Modifier = Modifier,
-    measureAllChildren: Boolean? = null,
+    measureAllChildren: Boolean = false,
     content: FrameLayout.() -> Unit
 
 ): FrameLayout {
@@ -30,7 +31,7 @@ fun ViewGroup.FrameLayout(
     view.layoutParams = generateLayoutParams(null)
     modifier(view)
 
-    measureAllChildren?.let { view.measureAllChildren = it }
+    view.measureAllChildren = measureAllChildren
 
     view.content()
     addView(view)
@@ -53,14 +54,14 @@ fun ViewGroup.FrameLayout(
 fun ViewGroup.LinearLayout(
 
     modifier: Modifier = Modifier,
-    orientation: Int? = null,
-    gravity: Int? = null,
-    showDividers: Int? = null,
+    orientation: Int = LinearLayout.HORIZONTAL,
+    gravity: Int = Gravity.TOP or Gravity.START,
+    showDividers: Int = LinearLayout.SHOW_DIVIDER_NONE,
     dividerDrawable: Drawable? = null,
-    weightSum: Float? = null,
-    baselineAligned: Boolean? = null,
-    baselineAlignedChildIndex: Int? = null,
-    measureWithLargestChildEnabled: Boolean? = null,
+    weightSum: Float = 0f,
+    baselineAligned: Boolean = true,
+    baselineAlignedChildIndex: Int = -1,
+    measureWithLargestChildEnabled: Boolean = false,
     content: LinearLayout.() -> Unit
 
 ): LinearLayout {
@@ -69,14 +70,17 @@ fun ViewGroup.LinearLayout(
     view.layoutParams = generateLayoutParams(null)
     modifier(view)
 
-    dividerDrawable?.let { view.dividerDrawable = it }
-    showDividers?.let { view.showDividers = it }
-    orientation?.let { view.orientation = it }
-    gravity?.let { view.gravity = it }
-    weightSum?.let { view.weightSum = it }
-    baselineAligned?.let { view.isBaselineAligned = it }
-    baselineAlignedChildIndex?.let { view.baselineAlignedChildIndex = it }
-    measureWithLargestChildEnabled?.let { view.isMeasureWithLargestChildEnabled = it }
+    view.orientation = orientation
+    view.showDividers = showDividers
+    view.dividerDrawable = dividerDrawable
+    view.gravity = gravity
+    view.weightSum = weightSum
+    view.isBaselineAligned = baselineAligned
+    view.isMeasureWithLargestChildEnabled = measureWithLargestChildEnabled
+
+    if (baselineAlignedChildIndex != -1) {
+        view.baselineAlignedChildIndex = baselineAlignedChildIndex
+    }
 
     view.content()
     addView(view)
@@ -98,10 +102,10 @@ fun ViewGroup.LinearLayout(
 fun ViewGroup.RelativeLayout(
 
     modifier: Modifier = Modifier,
-    gravity: Int? = null,
-    verticalGravity: Int? = null,
-    horizontalGravity: Int? = null,
-    ignoreGravityOnChild: Int? = null,
+    gravity: Int = Gravity.START or Gravity.TOP,
+    verticalGravity: Int = Gravity.TOP,
+    horizontalGravity: Int = Gravity.START,
+    ignoreGravityOnChild: Int = 0,
     content: RelativeLayout.() -> Unit
 
 ): RelativeLayout {
@@ -110,10 +114,10 @@ fun ViewGroup.RelativeLayout(
     view.layoutParams = generateLayoutParams(null)
     modifier(view)
 
-    gravity?.let { view.gravity = it }
-    verticalGravity?.let { view.setVerticalGravity(it) }
-    horizontalGravity?.let { view.setHorizontalGravity(it) }
-    ignoreGravityOnChild?.let { view.ignoreGravity = it }
+    view.gravity = gravity
+    view.setVerticalGravity(verticalGravity)
+    view.setHorizontalGravity(horizontalGravity)
+    view.ignoreGravity = ignoreGravityOnChild
 
     view.content()
     addView(view)
@@ -150,12 +154,12 @@ fun ViewGroup.RelativeLayout(
 fun ViewGroup.GridLayout(
 
     modifier: Modifier = Modifier,
-    alignmentMode: Int? = null,
-    rowCount: Int? = null,
-    rowOrderPreserved: Boolean? = null,
-    columnCount: Int? = null,
-    columnOrderPreserved: Boolean? = null,
-    useDefaultMargins: Boolean? = null,
+    alignmentMode: Int = GridLayout.ALIGN_MARGINS,
+    rowCount: Int = GridLayout.UNDEFINED,
+    rowOrderPreserved: Boolean = true,
+    columnCount: Int = GridLayout.UNDEFINED,
+    columnOrderPreserved: Boolean = true,
+    useDefaultMargins: Boolean = false,
     content: GridLayout.() -> Unit
 
 ): GridLayout {
@@ -164,12 +168,12 @@ fun ViewGroup.GridLayout(
     view.layoutParams = generateLayoutParams(null)
     modifier(view)
 
-    alignmentMode?.let { view.alignmentMode = it }
-    rowCount?.let { view.rowCount = it }
-    rowOrderPreserved?.let { view.isRowOrderPreserved = it }
-    columnCount?.let { view.columnCount = it }
-    columnOrderPreserved?.let { view.isColumnOrderPreserved = it }
-    useDefaultMargins?.let { view.useDefaultMargins = it }
+    view.alignmentMode = alignmentMode
+    view.rowCount = rowCount
+    view.isRowOrderPreserved = rowOrderPreserved
+    view.columnCount = columnCount
+    view.isColumnOrderPreserved = columnOrderPreserved
+    view.useDefaultMargins = useDefaultMargins
 
     view.content()
     addView(view)
