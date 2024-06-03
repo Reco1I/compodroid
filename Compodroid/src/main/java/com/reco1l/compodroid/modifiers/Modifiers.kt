@@ -8,6 +8,7 @@ import android.view.ViewGroup.LayoutParams
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewOutlineProvider
 import android.widget.GridLayout
+import android.widget.GridLayout.UNDEFINED
 import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
@@ -75,32 +76,32 @@ fun Modifier.matchParentHeight() = Modifier {
 
 fun Modifier.fillParentWidth(weight: Float = 1f) = Modifier {
     invoke(it)
-    (it.layoutParams as? LinearLayout.LayoutParams)?.apply {
-        this.width = 0
-        this.weight = weight
-    }
+    val layoutParams = it.layoutParams
+    require(layoutParams is LinearLayout.LayoutParams) { "Parent layout must be LinearLayout" }
+    layoutParams.width = 0
+    layoutParams.weight = weight
 }
 
 fun Modifier.fillParentHeight(weight: Float = 1f) = Modifier {
     invoke(it)
-    (it.layoutParams as? LinearLayout.LayoutParams)?.apply {
-        this.height = 0
-        this.weight = weight
-    }
+    val layoutParams = it.layoutParams
+    require(layoutParams is LinearLayout.LayoutParams) { "Parent layout must be LinearLayout" }
+    layoutParams.height = 0
+    layoutParams.weight = weight
 }
 
 fun Modifier.columnSpan(span: Int) = Modifier {
     invoke(it)
-    (it.layoutParams as? GridLayout.LayoutParams)?.apply {
-        columnSpec = GridLayout.spec(GridLayout.UNDEFINED, span)
-    }
+    val layoutParams = it.layoutParams
+    require(layoutParams is GridLayout.LayoutParams) { "Parent layout must be LinearLayout" }
+    layoutParams.columnSpec = GridLayout.spec(UNDEFINED, span)
 }
 
 fun Modifier.rowSpan(span: Int) = Modifier {
     invoke(it)
-    (it.layoutParams as? GridLayout.LayoutParams)?.apply {
-        rowSpec = GridLayout.spec(GridLayout.UNDEFINED, span)
-    }
+    val layoutParams = it.layoutParams
+    require(layoutParams is GridLayout.LayoutParams) { "Parent layout must be LinearLayout" }
+    layoutParams.rowSpec = GridLayout.spec(UNDEFINED, span)
 }
 
 fun Modifier.minWidth(width: Int) = Modifier {
@@ -117,9 +118,9 @@ fun Modifier.minHeight(height: Int) = Modifier {
 
 fun Modifier.layoutGravity(gravity: Int) = Modifier {
     invoke(it)
-    (it.layoutParams as? LinearLayout.LayoutParams)?.apply {
-        this.gravity = gravity
-    }
+    val layoutParams = it.layoutParams
+    require(layoutParams is LinearLayout.LayoutParams) { "Parent layout must be LinearLayout" }
+    layoutParams.gravity = gravity
 }
 
 
@@ -145,17 +146,23 @@ fun Modifier.padding(left: Int, top: Int, right: Int, bottom: Int) = Modifier {
 
 fun Modifier.margin(size: Int) = Modifier {
     invoke(it)
-    (it.layoutParams as? MarginLayoutParams)?.setMargins(size)
+    val layoutParams = it.layoutParams
+    require(layoutParams is MarginLayoutParams) { "Layout params must be instance of MarginLayoutParams" }
+    layoutParams.setMargins(size)
 }
 
 fun Modifier.margin(horizontal: Int, vertical: Int) = Modifier {
     invoke(it)
-    (it.layoutParams as? MarginLayoutParams)?.setMargins(horizontal, vertical, horizontal, vertical)
+    val layoutParams = it.layoutParams
+    require(layoutParams is MarginLayoutParams) { "Layout params must be instance of MarginLayoutParams" }
+    layoutParams.setMargins(horizontal, vertical, horizontal, vertical)
 }
 
 fun Modifier.margin(left: Int, top: Int, right: Int, bottom: Int) = Modifier {
     invoke(it)
-    (it.layoutParams as? MarginLayoutParams)?.setMargins(left, top, right, bottom)
+    val layoutParams = it.layoutParams
+    require(layoutParams is MarginLayoutParams) { "Layout params must be instance of MarginLayoutParams" }
+    layoutParams.setMargins(left, top, right, bottom)
 }
 
 

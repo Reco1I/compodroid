@@ -15,15 +15,13 @@ fun Modifier.textDirection(direction: Int) = Modifier {
 }
 
 fun Modifier.compoundDrawable(left: Drawable? = null, top: Drawable? = null, right: Drawable? = null, bottom: Drawable? = null) = Modifier {
+    require(it is TextView) { "Cannot apply this modifier to a non-TextView view" }
     invoke(it)
-    if (it is TextView) {
-        it.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom)
-    }
+    it.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom)
 }
 
 fun Modifier.compoundDrawableRelative(start: Drawable? = null, top: Drawable? = null, end: Drawable? = null, bottom: Drawable? = null) = Modifier {
+    require(it is TextView) { "Cannot apply this modifier to a non-TextView view" }
     invoke(it)
-    if (it is TextView) {
-        it.setCompoundDrawablesRelativeWithIntrinsicBounds(start, top, end, bottom)
-    }
+    it.setCompoundDrawablesRelativeWithIntrinsicBounds(start, top, end, bottom)
 }
