@@ -103,6 +103,15 @@ fun Modifier.rowSpan(span: Int) = Modifier {
     }
 }
 
+fun Modifier.minWidth(width: Int) = Modifier {
+    invoke(it)
+    it.minimumWidth = width
+}
+
+fun Modifier.minHeight(height: Int) = Modifier {
+    invoke(it)
+    it.minimumHeight = height
+}
 
 // Layout gravity
 
@@ -247,3 +256,4 @@ fun Modifier.alpha(value: Float) = Modifier {
     invoke(it)
     it.alpha = value
 }
+
